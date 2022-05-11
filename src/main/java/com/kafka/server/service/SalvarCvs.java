@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.sql.Timestamp;
 import static java.time.Instant.now;
 
+import java.io.IOException;
+
 @Service
 public class SalvarCvs implements ISalvarCsv{
 
@@ -18,14 +20,15 @@ public class SalvarCvs implements ISalvarCsv{
     private ProdutosDAO prodDao;
 
     @Override
-    public void salvarCsv(String arquivo) {
-        ArrayList<String[]> dadocsv = ReadCsv.lerCsvProdutos(arquivo);
-        for (String[] line : dadocsv) {
+    public void salvarCsv(ArrayList<String []> arquivo) throws IOException {
+        
+        for (String[] line : arquivo) {
             Produto pcsv = new Produto();
-            pcsv.setNome(line[0]);
-            pcsv.setDescricao(line[1]);
-            pcsv.setQuantidade(Integer.parseInt(line[2]));
-            pcsv.setValor(Integer.parseInt(line[3]));
+        
+            pcsv.setNome(line[1].trim());
+            pcsv.setDescricao(line[2].trim());
+            pcsv.setQuantidade(Integer.parseInt(line[3].trim()));
+            pcsv.setValor(Integer.parseInt(line[4].trim()));
             pcsv.setDataCadastro(Timestamp.from(now()));
             prodDao.save(pcsv);
         }

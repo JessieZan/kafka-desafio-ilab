@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class ReadCsv {
-    public static ArrayList<String[]> lerCsvProdutos (String arquivo) {
+    public static ArrayList<String[]> lerCsvProdutos (String arquivo) throws IOException {
         BufferedReader reader = null;
         String line = "";
         ArrayList<String[]> dadosProdutos = new ArrayList<String[]>();
@@ -22,6 +22,8 @@ public class ReadCsv {
         catch (Exception e) {
             e.printStackTrace();
             return null;
+        }finally{
+            reader.close();
         }
     }
 }

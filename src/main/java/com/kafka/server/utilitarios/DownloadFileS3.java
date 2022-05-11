@@ -12,13 +12,23 @@ import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 
 import java.io.*;
+import java.security.Provider.Service;
+import java.util.ArrayList;
+
+import com.kafka.server.dao.ProdutosDAO;
+import com.kafka.server.service.ISalvarCsv;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class DownloadFileS3 {
+
+	@Autowired
+	private ISalvarCsv servico;
 
 	private static final String BUCKET = "group-3-bucket";
 	// private static final String keyName = "csv_projeto_grupo-3.csv";
 
-	public static void downloadFile(String fileName)
+	public static ArrayList<String[]> downloadFile(String fileName)
 			throws S3Exception, AwsServiceException, SdkClientException, IOException {
 
 		AwsCredentialsProvider credentialsProvider = new AwsCredentialsProvider() {
@@ -48,7 +58,7 @@ public class DownloadFileS3 {
 				.key(fileName)
 				.build();
 
-		ResponseInputStream<GetObjectResponse> InputStream = client.getObject(request);
+		ResponseInputStream<GetObjectResponse> inputStream = client.getObject(request);
 
 		String fileName2 = new File(fileName).getName();
 
@@ -57,35 +67,36 @@ public class DownloadFileS3 {
 
 		int bytesRead = -1;
 
-		while ((bytesRead = InputStream.read(buffer)) != -1) {
+		while ((bytesRead = inputStream.read(buffer)) != -1) {
 			outputStream.write(buffer, 0, bytesRead);
 		}
-		;
-		InputStream.close();
+		
+		inputStream.close();
 		outputStream.close();
 
 		BufferedReader reader = null;
 		String line = "";
+		ArrayList<String[]> dadosProdutos = new ArrayList<String[]>();
 
-		try {
-			reader = new BufferedReader(new FileReader(fileName));
-			while ((line = reader.readLine()) != null) {
-				System.out.println();
-				String[] row = line.split(";");
-				for (String string : row) {
-					System.out.printf("%-10s ", string);
-				}
-				System.out.println();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				reader.close();
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
+        try {
+            reader = new BufferedReader(new FileReader(fileName));
+            while ((line = reader.readLine()) != null) {
+				
+                String[] row = line.split(";");			
+                dadosProdutos.add(row);
 
+				System.out.println(row[1]);
+				
+            }
+            return dadosProdutos;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }finally{
+			reader.close();
 		}
-	}
+    }
 }
+	
+	
