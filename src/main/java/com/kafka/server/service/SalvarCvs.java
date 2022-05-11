@@ -24,10 +24,11 @@ public class SalvarCvs implements ISalvarCsv{
         
         for (String[] line : arquivo) {
             Produto pcsv = new Produto();
-            pcsv.setNome(line[0]);
-            pcsv.setDescricao(line[1]);
-            pcsv.setQuantidade(Integer.parseInt(line[2]));
-            pcsv.setValor(Integer.parseInt(line[3]));
+        
+            pcsv.setNome(line[1].trim());
+            pcsv.setDescricao(line[2].trim());
+            pcsv.setQuantidade(Integer.parseInt(line[3].trim()));
+            pcsv.setValor(Integer.parseInt(line[4].trim()));
             pcsv.setDataCadastro(Timestamp.from(now()));
             prodDao.save(pcsv);
         }
