@@ -16,7 +16,7 @@ import java.io.*;
 public class DownloadFileS3 {
 
 	private static final String BUCKET = "group-3-bucket";
-	private static final String keyName = "csv_projeto_grupo-3.csv";
+	// private static final String keyName = "csv_projeto_grupo-3.csv";
 
 	public static void downloadFile(String fileName)
 			throws S3Exception, AwsServiceException, SdkClientException, IOException {
@@ -45,12 +45,12 @@ public class DownloadFileS3 {
 
 		GetObjectRequest request = GetObjectRequest.builder()
 				.bucket(BUCKET)
-				.key(keyName)
+				.key(fileName)
 				.build();
 
 		ResponseInputStream<GetObjectResponse> InputStream = client.getObject(request);
 
-		String fileName2 = new File(keyName).getName();
+		String fileName2 = new File(fileName).getName();
 
 		BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(fileName2));
 		byte[] buffer = new byte[4096];
@@ -61,16 +61,14 @@ public class DownloadFileS3 {
 			outputStream.write(buffer, 0, bytesRead);
 		}
 		;
-
 		InputStream.close();
 		outputStream.close();
 
-		String file = keyName;
 		BufferedReader reader = null;
 		String line = "";
 
 		try {
-			reader = new BufferedReader(new FileReader(file));
+			reader = new BufferedReader(new FileReader(fileName));
 			while ((line = reader.readLine()) != null) {
 				System.out.println();
 				String[] row = line.split(";");
