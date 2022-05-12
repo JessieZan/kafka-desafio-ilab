@@ -12,18 +12,13 @@ import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 
 import java.io.*;
-import java.security.Provider.Service;
 import java.util.ArrayList;
 
-import com.kafka.server.dao.ProdutosDAO;
 import com.kafka.server.service.ISalvarCsv;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class DownloadFileS3 {
-
-	@Autowired
-	private ISalvarCsv servico;
 
 	private static final String BUCKET = "group-3-bucket";
 	// private static final String keyName = "csv_projeto_grupo-3.csv";
