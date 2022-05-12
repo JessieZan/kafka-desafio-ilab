@@ -6,4 +6,4 @@ export CLASSPATH=target/kafka_consumer-1.0-SNAPSHOT.jar
 export className=ServerApplication
 echo "## Running $className..."
 shift
-mvn exec:java -Dexec.mainClass="com.kafka.server;.$className"
+mvn exec:java -Dexec.mainClass="com.kafka.server.$className"
