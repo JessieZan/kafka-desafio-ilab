@@ -1,10 +1,12 @@
 package com.kafka.server.utilitarios;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ReadCsv {
-    public static ArrayList<String[]> lerCsvProdutos (String arquivo) throws IOException {
+    public static ArrayList<String[]> lerCsvProdutos(String arquivo) throws IOException {
         BufferedReader reader = null;
         String line = "";
         ArrayList<String[]> dadosProdutos = new ArrayList<String[]>();
@@ -18,11 +20,10 @@ public class ReadCsv {
 
             }
             return dadosProdutos;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
-        }finally{
+        } finally {
             reader.close();
         }
     }
