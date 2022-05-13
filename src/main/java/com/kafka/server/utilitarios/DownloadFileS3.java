@@ -77,6 +77,7 @@ public class DownloadFileS3 {
                 dadosProdutos.add(row);
 
                 System.out.println(row[1]);
+                System.out.println(line);
 
             }
             return dadosProdutos;

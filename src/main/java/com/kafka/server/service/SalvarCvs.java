@@ -17,18 +17,20 @@ public class SalvarCvs implements ISalvarCsv {
     @Autowired
     private ProdutosDAO prodDao;
 
+    SalvarCsvElastic salvarElastic;
+
     @Override
     public void salvarCsv(ArrayList<String[]> arquivo) throws IOException {
 
         for (String[] line : arquivo) {
             Produto pcsv = new Produto();
-
             pcsv.setNome(line[1].trim());
             pcsv.setDescricao(line[2].trim());
-            pcsv.setQuantidade(Integer.parseInt(line[3].trim()));
-            pcsv.setValor(Integer.parseInt(line[4].trim()));
+            pcsv.setQuantidadee(Integer.parseInt(line[3].trim()));
+            pcsv.setValor(Double.parseDouble(line[4].trim()));
             pcsv.setDataCadastro(Timestamp.from(now()));
             prodDao.save(pcsv);
+
         }
     }
 
