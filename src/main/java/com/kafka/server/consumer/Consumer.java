@@ -1,6 +1,7 @@
 package com.kafka.server.consumer;
 
 import com.kafka.server.service.ISalvarCsv;
+import com.kafka.server.service.ISalvarCsvElastic;
 import com.kafka.server.utilitarios.DownloadFileS3;
 import org.apache.kafka.clients.producer.Producer;
 import org.slf4j.Logger;
@@ -18,6 +19,9 @@ public class Consumer {
     @Autowired
     private ISalvarCsv servico;
 
+    @Autowired
+    private ISalvarCsvElastic servicoElastic;
+
     private final Logger logger = LoggerFactory.getLogger(Producer.class);
 
     @KafkaListener(topics = "topico.comando.teste", groupId = "group_id")
@@ -26,6 +30,7 @@ public class Consumer {
         ArrayList<String[]> arquivo = DownloadFileS3.downloadFile(message);
 
         servico.salvarCsv(arquivo);
+        servicoElastic.postElasticSearch(arquivo);
 
     }
 }

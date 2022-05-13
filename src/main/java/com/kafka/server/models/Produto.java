@@ -18,12 +18,20 @@ public class Produto {
     @Column(name = "quantidade", nullable = false)
     private Integer quantidade;
     @Column(name = "valor", nullable = false)
-    private Integer valor;
+    private Double valor;
     @Column(name = "data")
     private Timestamp dataCadastro;
 
     public Produto() {
         super();
+    }
+    
+
+    public Produto( String nome, String descricao, Integer quantidade, Double valor) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.quantidade = quantidade;
+        this.valor = valor;
     }
 
     public Produto(Integer id, String nome, String descricao, Integer quantidade, Timestamp dataCadastro) {
@@ -50,11 +58,11 @@ public class Produto {
         this.nome = nome;
     }
 
-    public Integer getValor() {
+    public Double getValor() {
         return valor;
     }
 
-    public void setValor(Integer valor) {
+    public void setValor(Double valor) {
         this.valor = valor;
     }
 
@@ -66,20 +74,20 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public Integer getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(Integer quantidade) {
-        this.quantidade = quantidade;
-    }
-
     public Timestamp getDataCadastro() {
         return dataCadastro;
     }
 
     public void setDataCadastro(Timestamp dataCadastro) {
         this.dataCadastro = dataCadastro;
+    }
+
+    public Integer getQuantidade(){
+        return this.quantidade;
+    }
+
+    public void setQuantidadee(Integer quantidade){
+        this.quantidade = quantidade;
     }
 
 }
